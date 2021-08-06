@@ -1,0 +1,11 @@
+prefix=/home/pvenka/cirada/21_cm_emission/21-cm-Emission/21_cm_emission-PSOFT14/PSOFT14/MCGSuite/third_party/cfitsio-3.3x
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: cfitsio
+Description: FITS File Subroutine Library
+Version: 3.37
+Libs: -L${libdir} -lcfitsio 
+Libs.private: -lm
+Cflags: -I${includedir}

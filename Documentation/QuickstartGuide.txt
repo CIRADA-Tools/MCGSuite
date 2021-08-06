@@ -1,0 +1,44 @@
+MCGSuite Basic Running
+
+***		Running MCG
+
+MCG requires three text input files; a main input file, a data cube file, and a tilted ring model file.  Examples of these files can be found in /Inputs.
+
+Assuming these files exist, the code is run in terminal via:
+./Programs/MockCubeGenerator “MainInFile”
+
+Using the sample files, this would be:
+./Programs/MockCubeGenerator Inputs/MockCubeGeneratorInputs.in
+
+As a test, the output from the sample input files should agree with the contents of
+/SampleOutputs/MCG_SampleOut
+
+
+***		Running make_galaxy_MCG
+
+make_galaxy_MCG requires a number of things to run properly:
+
+1) The MCG program is located in the Programs subfolder
+2) That galaxy_config_MCG.py and observatory_config_MCG.py are in the same directory as make_galaxy_MCG.py
+3) If using a beta configuration file, that it is specified in galaxy_config_MCG.py and located in the same folder as make_galaxy_MCG.py
+
+Assuming these conditions are met, the code is run in terminal via:
+./make_galaxy_MCG
+
+As a test, the given input files should produce outputs agreeing with 
+/SampleOutputs/MakeGalaxy_SampleOutput/
+
+
+***		Running make_suite_MCG
+
+make_suite_MCG has similar requirements to make_galaxy_MCG:
+
+1) The MCG program is located in the Programs subfolder
+2) That suite_config_MCG.py and observatory_config_MCG.py are in the same directory as make_galaxy_MCG.py
+3) If using a beta configuration file, that it is specified in suite_config_MCG.py and located in the same folder as make_galaxy_MCG.py
+
+Assuming these conditions are met, the code is run in terminal via:
+./make_suite_MCG
+
+As a test, the given input files should produce outputs agreeing with 
+/SampleOutputs/MakeSuite_SampleOutput/

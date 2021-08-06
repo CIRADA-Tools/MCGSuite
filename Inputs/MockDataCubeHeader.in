@@ -1,0 +1,20 @@
+#	number of pixels and channels
+512 	512	127
+#	Pixel Size Units (0=degrees, 1=arcsec) - Reference Pixel Units (0=degrees) - Channel Size Units (0=m/s, 1=km/s) - Reference Channel Units (0=km/s)  — Beam axis Units (0=arcsec) — Beam Rotation Angle Units (0=degrees)
+1	0	1	1	1	0
+#	Pixel dimensions and channel size
+10.	10.	8.55
+#	Reference Pixel(channel) in each dimension (CRPIX values)
+256.	256.	63.
+#	Reference value in each dimension (CRVAL values)
+2.77675430E+02	  7.34348280E+01		1403.93164636
+#	Beam dimensions (major, minor, position angle)
+30.	30.	180.
+#	number of sigma lengths to reach with the beam
+5.
+#	Type of velocity smoothing to use (0=none, 1=Gaussian)
+0
+#	The velocity smoothing sigma if using Gaussian smoothing (km/s)
+4
+
+

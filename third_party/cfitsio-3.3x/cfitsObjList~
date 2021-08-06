@@ -1,0 +1,32 @@
+
+CFitsLoc=/home/nate/Research/cfitsio
+ZFitsLoc=/home/nate/Research/cfitsio/zlib
+
+CFitsObjLoc= $(CFitsLoc)/buffers.o $(CFitsLoc)/cfileio.o $(CFitsLoc)/checksum.o $(CFitsLoc)/drvrfile.o $(CFitsLoc)/drvrmem.o \
+		$(CFitsLoc)/drvrnet.o $(CFitsLoc)/drvrsmem.o $(CFitsLoc)/drvrgsiftp.o \
+		$(CFitsLoc)/editcol.o $(CFitsLoc)/edithdu.o $(CFitsLoc)/eval_l.o \
+		$(CFitsLoc)/eval_y.o $(CFitsLoc)/eval_f.o $(CFitsLoc)/fitscore.o \
+                $(CFitsLoc)/getcol.o $(CFitsLoc)/getcolb.o $(CFitsLoc)/getcold.o $(CFitsLoc)/getcole.o \
+		$(CFitsLoc)/getcoli.o $(CFitsLoc)/getcolj.o $(CFitsLoc)/getcolk.o \
+                $(CFitsLoc)/getcoll.o $(CFitsLoc)/getcols.o $(CFitsLoc)/getcolsb.o \
+		$(CFitsLoc)/getcoluk.o $(CFitsLoc)/getcolui.o $(CFitsLoc)/getcoluj.o $(CFitsLoc)/getkey.o \
+                $(CFitsLoc)/group.o $(CFitsLoc)/grparser.o \
+		$(CFitsLoc)/histo.o $(CFitsLoc)/iraffits.o \
+		$(CFitsLoc)/modkey.o $(CFitsLoc)/putcol.o $(CFitsLoc)/putcolb.o $(CFitsLoc)/putcold.o \
+                $(CFitsLoc)/putcole.o $(CFitsLoc)/putcoli.o \
+		$(CFitsLoc)/putcolj.o $(CFitsLoc)/putcolk.o $(CFitsLoc)/putcoluk.o \
+                $(CFitsLoc)/putcoll.o $(CFitsLoc)/putcols.o $(CFitsLoc)/putcolsb.o \
+		$(CFitsLoc)/putcolu.o $(CFitsLoc)/putcolui.o $(CFitsLoc)/putcoluj.o \
+                $(CFitsLoc)/putkey.o $(CFitsLoc)/region.o $(CFitsLoc)/scalnull.o \
+		$(CFitsLoc)/swapproc.o $(CFitsLoc)/wcssub.o $(CFitsLoc)/wcsutil.o \
+                $(CFitsLoc)/imcompress.o $(CFitsLoc)/quantize.o $(CFitsLoc)/ricecomp.o \
+		$(CFitsLoc)/pliocomp.o $(CFitsLoc)/fits_hcompress.o $(CFitsLoc)/fits_hdecompress.o \
+		$(CFitsLoc)/simplerng.o
+
+
+ZLIBObjLoc =	$(ZFitsLoc)/adler32.o $(ZFitsLoc)/crc32.o $(ZFitsLoc)/deflate.o $(ZFitsLoc)/infback.o \
+		$(ZFitsLoc)/inffast.o $(ZFitsLoc)/inflate.o $(ZFitsLoc)/inftrees.o $(ZFitsLoc)/trees.o \
+		$(ZFitsLoc)/uncompr.o $(ZFitsLoc)/zcompress.o $(ZFitsLoc)/zuncompress.o $(ZFitsLoc)/zutil.c
+
+AllFitsObjLoc= $(CFitsObjLoc) $(ZLIBObjLoc)
+

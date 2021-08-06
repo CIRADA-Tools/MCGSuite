@@ -1,0 +1,32 @@
+MCGSuite Installation
+
+*** Requirements
+
+MCG requires a Fortran compiler (recommended to be gfortran), cfitsio, and fftw3.
+cfitsio is available at:
+https://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html
+
+fftw3 is available at:
+http://www.fftw.org
+
+make_galaxy_MCG and make_suite_MCG require python3, numpy, scipy, matplotlib, and astropy.
+
+For convenience, versions of the cfitsio and fftw3 are contained in /third_party.
+
+
+
+***  Full Installation
+
+0) Configure and install cfitsio and fftw3 according to their instructions.
+
+1) Edit /src/makeflags so that 
+      a) FitsLibLoc points to libcfitsio.a
+      b) FFTW_* points to the fftw3 library.
+      c) F77 is the Fortran compiler to be used.
+
+2) In terminal run:
+      cd src/
+      make clean
+      make 
+
+This should generate MockCubeGenerator and place it in /Programs
