@@ -1,0 +1,48 @@
+#  Lists of all the various file locations
+#  	Give the names of all the programs that will be made
+
+AllProgs=MockCubeGenerator
+
+#	First define the standard math routines needed
+StandardMathObj=BasicConstants.o random.o
+
+#	First the files for the various object definitions and structures
+ObjectDefObj=Particle.o TiltedRing.o DataCube.o Beam.o ParameterVector.o 
+
+
+#	Now the routines for making tilted ring parameters
+TiltedRingGenerationObj=SingleRingGeneration.o TiltedRingModelGeneration.o
+ParticleGeometryObj=Rotation.o
+
+TiltedRingToDataCubeObj=FillDataCubeByTiltedRing.o
+
+ConvolutionObj=CalculateBeamKernel.o TwoDConvolution.o CubeKernelConvolution.o VelocitySmoothing.o
+
+NoiseCubeObj=MakeNoiseCube.o
+
+
+TiltedRingInterfaceObj=ParameterToTiltedRingVector.o
+
+
+
+GeneralObjects= $(TiltedRingGenerationObj) $(ParticleGeometryObj) $(TiltedRingToDataCubeObj) $(ConvolutionObj) $(NoiseCubeObj) $(CompareCubeObj) $(TiltedRingInterfaceObj) 
+
+#	The files for the various outputs
+OutputObj= DataCubeOutputs.o TiltedRingOutputs.o
+#	The files for the various inputs
+InputObj=InputUnitConversions.o DataCubeInput.o CubeGeneratorInputs.o TiltedRingModelInput.o 
+
+
+#	The global definitions
+GlobalObj= CubeGeneratorGlobals.o
+
+
+#Now list the various files that contain routines specific to bootstrap sampling
+
+
+#Finally list the different program main objects
+ProgramObj=GenerateMockCube.o
+
+AllObj = $(StandardMathObj) $(ObjectDefObj) $(GeneralObjects) $(InputObj) $(OutputObj) $(GlobalObj)
+
+
