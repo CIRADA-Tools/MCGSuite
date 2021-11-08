@@ -157,11 +157,11 @@ def MakeMomentMapsPlot(GalaxyIO,PositionAngle,BeamFWHM,noise,RHI,Inc,distance,VH
 
 def MomentMap(ax,Map,cMap,X,Y,Labels,Title):
     #print("Moment map shapes", np.shape(Map), np.shape(X),np.shape(Y))
-    ax.pcolormesh(X,Y,Map,cmap=cMap)
+    ax.pcolormesh(X,Y,Map,cmap=cMap,shading='auto')
     FormatPlot(ax,Labels,Title)
 
 def MomentMap_Ellipse(ax,Map,cMap,X,Y,Labels,Title,a,inc,pa,center,CLims):
-    ax.pcolormesh(X,Y,Map,cmap=cMap,vmin=CLims[0],vmax=CLims[1])
+    ax.pcolormesh(X,Y,Map,cmap=cMap,vmin=CLims[0],vmax=CLims[1],shading='auto')
     ellip=np.cos(inc*np.pi/180.)
     b=a*ellip
     angle=(90+pa)

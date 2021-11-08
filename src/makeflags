@@ -8,7 +8,7 @@ LocBinLoc=$(PARENT_DIR)/src/bin
 
 
 
-FitsLibLoc=$(PARENT_DIR)/third_party/cfitsio-3.3x/libcfitsio.a
+FitsLibLoc=$(PARENT_DIR)/third_party/cfitsio-3.3x/libcfitsio.a -lcurl -lz
 
 
 
