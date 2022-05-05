@@ -1,7 +1,7 @@
 # HI Mass of galaxy (logarithmic)
 Mass = 8
 # Number of beams across DHI (major axis)
-Beams = 5.5
+Beams =10
 # Inclination in degrees
 Inclination = 45.
 # Position Angle in degrees
