@@ -8,6 +8,3 @@ ChannelSize=4.
 beam_fwhm=30
 #### Underlying Noise amount (mJy/beam)
 noise_value=1.6
-
-
-noise_value=1.72266995048377
