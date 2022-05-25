@@ -80,7 +80,7 @@ def ProfilesConfig(Profiles):
 
 def DataCubeConfig(DataCube,nBeams,VHI,veldisp,TiltedRing):
      #   Set the cube dimensions (in arcsec, arcsec, and km/s)
-    DataCube.cube_dimensions=[DataCube.pixel_size,DataCube.pixel_size,DataCube.channel_size]
+    DataCube.cube_dimensions=[-DataCube.pixel_size,DataCube.pixel_size,DataCube.channel_size]
     
     #   Now check if the data cube shape has been defined.  If it has use that shape.
     if DataCube.cube_shape == None:
