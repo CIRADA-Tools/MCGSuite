@@ -21,7 +21,7 @@ def MakeProfiles(Profiles,Galaxy,GalaxyIO):
      #   Calculate Vrot for that profile:
      Profiles.Vrot=SR.CalcV(Galaxy.RC,Profiles.R)
      #   Calculate the surface brightness for that profile:
-     Profiles.SB=SR.CalcSB(Galaxy.SB,Galaxy.VHI,Profiles.R)
+     Profiles.SB=SR.CalcSB(Galaxy.SB,Galaxy.VHI,Profiles.R,Galaxy.UDG_switch,Galaxy.logMHI,Galaxy.RHI)
      #
      #
      ####################################           
