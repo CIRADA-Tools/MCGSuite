@@ -25,10 +25,10 @@ def MakeGalaxy(gal,dc):
     gal.distance = ( 2.* gal.RHI * 206265. )/( gal.nBeams * dc.beam_fwhm * 1000. )
     #
     #Set the HI RC velocity at RHI, in kms, from MHI:
-    gal.VHI = setVHI(gal.logMHI)
+    gal.VHI = setVHI(gal.logMHI,gal.UDG_switch,gal.v_HI)
     #
     #Set the Polyex rotation curve parameters:
-    Polyex_V, Polyex_r, Polyex_a = setRC(gal.RHI,gal.VHI)
+        Polyex_V, Polyex_r, Polyex_a = setRC(gal.RHI,gal.VHI,gal.UDG_switch)
     gal.RC.vPE = copy.deepcopy(Polyex_V)
     gal.RC.rPE = copy.deepcopy(Polyex_r)
     gal.RC.aPE = copy.deepcopy(Polyex_a)
@@ -64,7 +64,7 @@ def setRHI(logMHI):
     return RHI
 
 
-def setVHI(logMHI):
+def setVHI(logMHI,UDG_switch,v_HI):
 #Use relationship derived from abundance-matching
 #the a.40 HIMF and VF to find VHI from logMHI.
 #--> INPUT: log(MHI/Mo)
@@ -76,10 +76,13 @@ def setVHI(logMHI):
      V = 10**y(logMHI)
      # Set max at 300km/s:
      VHI = np.amin([V,300.0])
+     #If UDG mode is activated, the user inputs the v_HI they want
+     if UDG_switch==True:
+          VHI=v_HI
      return VHI
 
  
-def setRC(RHI,VHI):
+def setRC(RHI,VHI,UDG_switch):
 #Define the RC through the parameters of the
 #Polyex function:
 # Vrot = VPE * (1-exp(-r/rPE))*(1+aPE*r/rPE)
@@ -120,6 +123,13 @@ def setRC(RHI,VHI):
     VPE_temp = CVPEvec[ind]
     rPE = CrPEvec[ind]
     aPE_temp = CaPEvec[ind]
+    
+    #If UDG switch is on, just set the parameters to the lowest mass option in$
+    if UDG_switch==True:
+        VPE_temp=275 #units?
+        rPE_temp=0.126  #ratio of optical radii
+        aPE_temp=0.008
+    
     # Now find the outer slope corresponding to RHI from Dutton+19:
     logDHI = np.log10(2*RHI)
     Vslope = -0.385*logDHI + 0.666
