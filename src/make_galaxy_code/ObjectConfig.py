@@ -39,17 +39,19 @@ def ConfigObjects(Galaxy,DataCube,TiltedRing,Profiles,GalaxyIO):
     
     TiltedRing=TiltedRingConfig(TiltedRing,Galaxy.nBeams,DataCube.beam_fwhm)
     
-    GalaxyIO=BasicIOConfig(GalaxyIO,Galaxy.nBeams,Galaxy.logMHI,Galaxy.inclination,Galaxy.pa,Galaxy.veldisp,Galaxy.version_number,Galaxy.ID)
+    GalaxyIO=BasicIOConfig(GalaxyIO,Galaxy.nBeams,Galaxy.logMHI,Galaxy.inclination,Galaxy.pa,Galaxy.veldisp,Galaxy.v_HI,Galaxy.version_number,Galaxy.ID,Galaxy.UDG_switch)
     
     return DataCube,TiltedRing,Profiles,GalaxyIO
 
 
-def BasicIOConfig(GalaxyIO,beams, mass, inc, pa,veldisp,Version=None,ID=None):
+def BasicIOConfig(GalaxyIO,beams, mass, inc, pa,veldisp,v_HI,Version=None,ID=None,UDG_switch=False):
     #   Name the Output galaxy
     GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)
     #       If there's a version number, include that in the name
     if Version !=None:
         GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".version_"+str(Version)
+    if UDG_switch:
+        GalaxyIO.GalaxyName+=".UDG_True.v_HI"+str(v_HI)
     #   Name the diagnostic moment maps plot
     GalaxyIO.MapPlotName=GalaxyIO.GalaxyName+"_MomentMaps.png"
         #   Name the diagnostic profiles plot

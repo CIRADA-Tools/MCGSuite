@@ -99,6 +99,11 @@ class Galaxy:
         self.version_number=None
         #   Set the ID number of the galaxy object to None (only used for making a full suite)
         self.ID=None
+        #Set the default UDG_switch to False (only used to create mock cubes of UDGs)
+        self.UDG_switch=False
+        # Set the default v_HI velocity to 30 km/s (centre of valid UDG v_HI range)
+        self.v_HI=30
+
 
     class RotationCurve:
         #   Rotation Curve Initialization
