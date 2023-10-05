@@ -1,4 +1,4 @@
-prefix=/home/pvenka/cirada/21_cm_emission/21-cm-Emission/21_cm_emission-PSOFT14/PSOFT14/MCGSuite/third_party/fftw-3.3.8
+prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

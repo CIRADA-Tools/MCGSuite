@@ -21,7 +21,7 @@ def MakeTiltedRing(Galaxy,DataCube,TiltedRing):
     TiltedRing.v_tangential_array=SR.CalcV(Galaxy.RC,R_phys)
     
     #   Next get the surface brightness at each radial point
-    TiltedRing.sigma_array=SR.CalcSB(Galaxy.SB,Galaxy.VHI,R_phys)
+    TiltedRing.sigma_array=SR.CalcSB(Galaxy.SB,Galaxy.VHI,R_phys,Galaxy.UDG_switch,Galaxy.logMHI,Galaxy.RHI)
     TiltedRing.sigma_array=SR.SBUnitConversion(TiltedRing.sigma_array)
     #TiltedRing.sigma_array=R_phys/R_phys
     #   Now get the scale height

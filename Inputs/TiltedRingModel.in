@@ -7,8 +7,8 @@
 #	Central Position Switch (0=degrees, 1=arcsec), Inc/PA Unit switch (0=degrees, 1=arcsec), Velocity Units (0=m/s, 1=km/s), Brightness Units (0=Jy km/s arcsec^-2)
 0	0	1	0
 #	The parameters in each radial bin
-#	Rmid	Rwidth	Xcent	Ycent	Inc	PA	VSys	VRot	VRad	Vvert	VDisp	dvdz	Sigma		z0	zGradStart
-1.25	2.5	277.67543	73.434828	45.0	135.0	1403.93164636	11.1	0.0	0.0	8.0	0.0	0.0002097	0.2574	1.2870000000000001
+#	Rmid	Rwidth	Xcent	Ycent			Inc	PA	VSys		VRot	VRad	Vvert	VDisp	dvdz	Sigma		z0	zGradStart
+	1.25	2.5	277.67543	73.434828	45.0	135.0	1403.93164636	11.1	0.0	0.0	8.0	0.0	0.0002097	0.2574	1.2870000000000001
 3.75	2.5	277.67543	73.434828	45.0	135.0	1403.93164636	31.57	0.0	0.0	8.0	0.0	0.00024245	0.2683	1.3415
 6.25	2.5	277.67543	73.434828	45.0	135.0	1403.93164636	48.86	0.0	0.0	8.0	0.0	0.00027465	0.29055	1.45275
 8.75	2.5	277.67543	73.434828	45.0	135.0	1403.93164636	63.49	0.0	0.0	8.0	0.0	0.0003062	0.31375	1.5687499999999999

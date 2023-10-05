@@ -51,7 +51,7 @@ def BasicIOConfig(GalaxyIO,beams, mass, inc, pa,veldisp,v_HI,Version=None,ID=Non
     if Version !=None:
         GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".version_"+str(Version)
     if UDG_switch:
-        GalaxyIO.GalaxyName+=".UDG_True.v_HI"+str(v_HI)
+        GalaxyIO.GalaxyName+=".UDG_True.v_HI_"+str(v_HI)
     #   Name the diagnostic moment maps plot
     GalaxyIO.MapPlotName=GalaxyIO.GalaxyName+"_MomentMaps.png"
         #   Name the diagnostic profiles plot

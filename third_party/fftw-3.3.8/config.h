@@ -43,7 +43,7 @@
 /* #undef FC_DUMMY_MAIN_EQ_F77 */
 
 /* C compiler name and flags */
-#define FFTW_CC "gcc -std=gnu99 -O3 -fomit-frame-pointer -mtune=native -malign-double -fstrict-aliasing -fno-schedule-insns"
+#define FFTW_CC "gcc -O3 -fomit-frame-pointer -mtune=native -fstrict-aliasing -fno-schedule-insns -Wa,-q -Wl,-no_compact_unwind"
 
 /* Define to enable extra FFTW debugging code. */
 /* #undef FFTW_DEBUG */
@@ -126,7 +126,7 @@
 
 /* Define to 1 if you have the declaration of `memalign', and to 0 if you
    don't. */
-#define HAVE_DECL_MEMALIGN 1
+#define HAVE_DECL_MEMALIGN 0
 
 /* Define to 1 if you have the declaration of `posix_memalign', and to 0 if
    you don't. */
@@ -199,13 +199,13 @@
 #define HAVE_LONG_DOUBLE 1
 
 /* Define to 1 if you have the `mach_absolute_time' function. */
-/* #undef HAVE_MACH_ABSOLUTE_TIME */
+#define HAVE_MACH_ABSOLUTE_TIME 1
 
 /* Define to 1 if you have the <malloc.h> header file. */
-#define HAVE_MALLOC_H 1
+/* #undef HAVE_MALLOC_H */
 
 /* Define to 1 if you have the `memalign' function. */
-#define HAVE_MEMALIGN 1
+/* #undef HAVE_MEMALIGN */
 
 /* Define to 1 if you have the `memmove' function. */
 #define HAVE_MEMMOVE 1

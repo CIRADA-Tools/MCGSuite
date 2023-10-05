@@ -66,7 +66,7 @@ class Suite:
 
 class Galaxy:
     #   Set the full dictionary of Galaxy attributes
-    __slots__=['RC','SB','logMHI','nBeams','inclination','pa','RHI','distance','VHI','SizeLimits','MassLimits','veldisp','dispersionLimits','version_number','ID']
+    __slots__=['RC','SB','logMHI','nBeams','inclination','pa','RHI','distance','VHI','SizeLimits','MassLimits','veldisp','dispersionLimits','version_number','ID','UDG_switch','v_HI']
     #   Galaxy Initializing function
     def __init__(self):
         #   Initialize the Rotation Curve sub class

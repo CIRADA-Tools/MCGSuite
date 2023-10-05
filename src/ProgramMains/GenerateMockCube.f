@@ -42,7 +42,8 @@ c       Make the Noise Cube
 c       Sum the noise with the flux
       ModelDC%Flux=ModelDC%Flux+NoiseCube%Flux
 c       Output the new signal+noise cube
-      call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(3))    !/src/Outputs/DataCubeOutputs/f
+      call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(3)
+     &                  ,trim(OutputBaseNames))    !/src/Outputs/DataCubeOutputs/f
       script="mv "//trim(OutputFileNames(3))//" "//trim(OutputBaseNames)
 c     &              //"/"
       call system(trim(script))
@@ -65,6 +66,7 @@ c      use TiltedRingOutputsMod
       implicit none
       real pixelarea
       character(500) script
+      real Distance
 
 c       Calculate the area of a pixel in arcsec^2
       pixelarea=abs(ModelDC%DH%PixelSize(0)*ModelDC%DH%PixelSize(1))
@@ -79,12 +81,18 @@ c       Save the source cube to a file
       if(OutputFileVolumeSwitch .eq. 0) then
         return
       else
-        call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(0)) !/src/Outputs/DataCubeOutputs/f
+        call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(0)
+     &              ,trim(OutputBaseNames)) !/src/Outputs/DataCubeOutputs/f
 c       Move the source cube into the target directory
         script="mv "//trim(OutputFileNames(0))
      &                 //" "//trim(OutputBaseNames)//"/"
         call system(trim(script))
       endif
+c      print*, "Total Source Flux", sum(ModelDC%Flux)
+c      Distance=19.56
+c      print*, "Mass Estimate -wrong units"
+c     &          ,0.236*(Distance*1000.)**2.*sum(ModelDC%Flux)
+
       return
       end subroutine
 cccccc
@@ -100,11 +108,14 @@ c       This routine runs the convolutions and outputs the results (depending on
       implicit none
       character(500) script
       real BeamArea, BeamPixels
+
+      real TestFlux,nPix
 c       Do the velocity smoothing
       call SmoothVelChannels(ModelDC,ModelBeam) !/src/ConvolveCube/VelocitySmoothing.f
 c       If being very verbose output the velocity smoothed source cube
       if(OutputFileVolumeSwitch .eq. 3) then
-        call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(1)) !/src/Outputs/DataCubeOutputs/f
+        call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(1)
+     &                  ,trim(OutputBaseNames)) !/src/Outputs/DataCubeOutputs/f
 c       Move the source cube into the target directory
         script="mv "//trim(OutputFileNames(1))//
      &                  " "//trim(OutputBaseNames)//"/"
@@ -117,12 +128,22 @@ c       Re-scale the source cube flux
      &                      *ModelBeam%BeamSigmaVector(1))
 c      BeamPixels=BeamArea/(ModelDC%DH%PixelSize(0)
 c     &              *ModelDC%DH%PixelSize(1))
+c      print*, "Convolved Source Flux before conversion"
+c     &      , sum(ModelDC%Flux)
       BeamPixels=BeamArea
+      print*, sum(ModelDC%Flux)
       ModelDC%Flux=ModelDC%Flux*BeamPixels
+
+c      print*, "Convolved Source Flux", sum(ModelDC%Flux)
+
+c      nPix=ModelDC%DH%nPixels(0)*ModelDC%DH%nPixels(1)
+c      TestFlux=sum(ModelDC%Flux)/BeamPixels
+c      print*, "Test Total", TestFlux,nPix,TestFlux*nPix
 
 c       If being verbose output the convolved source cube
       if(OutputFileVolumeSwitch .ge. 2 ) then
-        call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(2))
+        call WriteDataCubeToFITS(ModelDC,ModelBeam,OutputFileNames(2)
+     &                  ,trim(OutputBaseNames))
 c       Move the source cube into the target directory
         script="mv "//trim(OutputFileNames(2))
      &                  //" "//trim(OutputBaseNames)//"/"
@@ -177,13 +198,16 @@ c           This routine sets the units for the output cube header
       implicit none
       Type(DataCube), INTENT(INOUT) :: DC
 
-      DC%DH%Units(0)='DEGREES'
-      DC%DH%Units(1)='DEGREES'
+c      DC%DH%Units(0)='DEGREES'
+c      DC%DH%Units(1)='DEGREES'
+      DC%DH%Units(0)='deg'
+      DC%DH%Units(1)='deg'
       DC%DH%Units(2)='m/s    '
 
       DC%DH%AxisType(0)='RA---SIN'
       DC%DH%AxisType(1)='DEC--SIN'
-      DC%DH%AxisType(2)='VELO-LSR'
+c      DC%DH%AxisType(2)='VOPT'
+      DC%DH%AxisType(2)='VELO'
       DC%DH%FUnit='Jy/Beam '
       DC%DH%FType='intensity'
       DC%DH%Epoch=2000.

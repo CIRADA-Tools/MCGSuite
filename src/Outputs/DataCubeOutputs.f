@@ -17,19 +17,20 @@ ccccccccccccccccccccccccccccccccccccccccccccccccc
 ccccccc
 c           This routine is the main routine for writing out a FITS cubes
 c               Note that many of these routines are adapted from the cfitsio cookbook
-      subroutine WriteDataCubeToFITS(DC,Beam,fname)
+      subroutine WriteDataCubeToFITS(DC,Beam,fname,Name)
       implicit none
       Type(DataCube), INTENT(IN):: DC
       Type(Beam2D),INTENT(IN) :: Beam
       character(*), INTENT(IN) :: fname
-
+      character(*),INTENT(IN):: Name
 
       integer status,unit
       integer naxes(3)
       print*, "Outputting Data Cube"
 
       call InitializeFITSFileIO(fname,status,unit)
-      call WriteFITSHeader(DC,Beam,fname,status,unit,naxes)
+      call WriteFITSHeader(DC,Beam,fname,status,unit,naxes
+     &          ,Name)
       call WriteFITSBody(DC,fname,status,unit,naxes)
 
 
@@ -62,6 +63,7 @@ C  Create the new empty FITS file.  The blocksize parameter is a
 C  historical artifact and the value is ignored by FITSIO.
       blocksize=1
       call ftinit(unit,fname,blocksize,status)
+c      print*, "Initialized Fits unit", unit, trim(fname)
 
       return
       end subroutine
@@ -69,15 +71,17 @@ cccccc
 
 ccccc
 c           This routine writes out all the necessary header information
-      subroutine WriteFITSHeader(DC,Beam,fname,status,unit,naxes)
+      subroutine WriteFITSHeader(DC,Beam,fname,status,unit,naxes
+     &              ,Name)
       use CommonConsts
       implicit none
       Type(DataCube), INTENT(IN):: DC
       Type(Beam2D),INTENT(IN) :: Beam
       character(*), INTENT(IN) :: fname
+      character(*),INTENT(IN) :: Name
       integer, INTENT(IN) :: unit
       integer, INTENT(INOUT) :: status
-      integer, INTENT(OUT) :: naxes(3)
+      integer, INTENT(INOUT) :: naxes(3)
 
       logical simple, extend
       integer naxis,bitpix
@@ -85,6 +89,9 @@ c           This routine writes out all the necessary header information
       character(10) date,time,zone
       character(20) tString
       integer date_I(8)
+      integer test1,test2
+
+      integer naxesT(3),naxisT
 
       simple=.true.
       naxis=3
@@ -93,9 +100,22 @@ c           This routine writes out all the necessary header information
       bitpix=-32
       naxes(1:2)=DC%DH%nPixels(0:1)
       naxes(3)=DC%DH%nChannels
-C  Write the required header keywords to the file
-      call ftphpr(unit,simple,bitpix,naxis,naxes,0,1,extend,status)
 
+      print*, "Outputting Data Cube", naxes
+
+      naxesT=naxes
+      naxisT=naxis
+
+      test1=0
+      test2=1
+c      print*, "Consistency header check", unit, simple
+c     &      ,bitpix,naxis,naxes,extend,status
+C  Write the required header keywords to the file
+      call ftphpr(unit,simple,bitpix,naxisT
+     &      ,naxesT,test1,test2,extend,status)
+c      call ftphps(unit,bitpix,naxis
+c     &      ,naxes,status)
+c      print*, "Writing header", naxis,naxes
 
 
 c       Write the 'optional' keywords that are also necessary for the file
@@ -175,8 +195,8 @@ c           units
       call ftpkys(unit,'ORIGIN',"MockCubeGenerator",
      &          ' ',status)
 
-      call ftpkys(unit,'OBJECT',"TestCube",
-     &          ' ',status)
+c      call ftpkys(unit,'OBJECT',Name,
+c     &          ' ',status)
 
 c       Header values needed for CARTA?
       call ftpkye(unit,'RestFreq',
@@ -186,6 +206,34 @@ c       Header values needed for CARTA?
      &          ' ',status)
 
       call ftpkys(unit,'RADESYS',"FK5",
+     &          ' ',status)
+
+c       Add a bunch of extra bits to deal with WCS definitions
+
+      call ftpkye(unit,'PC01_01',1.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'PC02_01',0.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'PC03_01',0.0,8,
+     &          ' ',status)
+
+      call ftpkye(unit,'PC01_02',0.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'PC02_02',1.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'PC03_02',0.0,8,
+     &          ' ',status)
+
+      call ftpkye(unit,'PC01_03',0.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'PC02_03',0.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'PC03_03',1.0,8,
+     &          ' ',status)
+
+      call ftpkye(unit,'LONPOLE',180.0,8,
+     &          ' ',status)
+      call ftpkye(unit,'LATPOLE',0.0,8,
      &          ' ',status)
 
       return
@@ -204,9 +252,10 @@ cccccc
       integer, INTENT(IN) :: unit,naxes(3)
       integer, INTENT(INOUT) :: status
 
-      integer group,fpixel,nelements
+      integer*8 group,fpixel,nelements
       real,ALLOCATABLE:: FTest(:,:,:)
       integer i,j
+    
 
 c Write the array to the FITS file.
 C  The last letter of the subroutine name defines the datatype of the
@@ -215,18 +264,25 @@ C  integer*4 datatype. ('I' = I*2, 'E' = Real*4, 'D' = Real*8).
 C  The 2D array is treated as a single 1-D array with NAXIS1 * NAXIS2
 C  total number of pixels.  GROUP is seldom used parameter that should
 C  almost always be set = 1.
+
+c      print*, "Writing Fits Body"
       ALLOCATE(FTest(naxes(1),naxes(2),naxes(3)))
       do i=1, naxes(1)
         do j=1,naxes(2)
             FTest(i,j,1:naxes(3))=DC%Flux(i-1,j-1,0:naxes(3)-1)
         enddo
       enddo
+    
 
       group=1
       fpixel=1
       nelements=naxes(1)*naxes(2)*naxes(3)
+c      print*, "check on shape/size", nelements, group,fpixel
+c     &          ,shape(FTest)
 c      call ftppre(unit,group,fpixel,nelements,DC%Flux,status)
       call ftppre(unit,group,fpixel,nelements,FTest,status)
+c      call ffppxe(unit,group,fpixel,nelements,FTest,status)
+c      print*, "Done Fits body write"
 
       DEALLOCATE(FTest)
 

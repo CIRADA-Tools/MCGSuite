@@ -88,6 +88,11 @@ def GetGalaxyInputs(Galaxy,ModName):
     Galaxy.pa=ModuleVarCheck_Exit(Galaxy.pa,'PositionAngle',ModName,ErrorMsg)
     #   Try to set the velocity dispersion
     Galaxy.veldisp=ModuleVarCheck_Exit(Galaxy.veldisp,'veldisp',ModName,ErrorMsg)
+    #  Try to set the UDG_switch
+    Galaxy.UDG_switch=ModuleVarCheck_Exit(Galaxy.UDG_switch,'UDG_switch',ModName,ErrorMsg)
+    #  Try to set the v_HI value if UDG_switch=True
+    Galaxy.v_HI=ModuleVarCheck_Exit(Galaxy.v_HI,'v_HI',ModName,ErrorMsg)
+    
     return Galaxy
 
 

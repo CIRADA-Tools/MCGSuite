@@ -8,6 +8,8 @@ Inclination = 45.
 PositionAngle=0.
 #   Velocity dispersion in km/s
 veldisp=8.
+#Switch used to determine if UDG scaling relations are used or not (T/F)
+UDG_switch=False
 
 # Output Folder
 OutFolder='MakeGalaxy_MGC_TestOutput'

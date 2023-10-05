@@ -63,7 +63,7 @@ def MP22_SD(r):
     print('Using the surface density functional form in MP22 publication')
     return SD/1.33333
     
-def CalcSB(SBObj,VHI,R):
+def CalcSB(SBObj,VHI,R,UDG_switch,log_MHI,RHI):
 # Returns the value of the Gaussian+Exponential surface brightness profile
 # at a galactocentric radius R given the parameters in SBObj of the
 # Galaxy.SurfaceBrightness subclass.

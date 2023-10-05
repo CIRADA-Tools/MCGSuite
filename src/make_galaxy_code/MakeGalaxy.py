@@ -28,7 +28,7 @@ def MakeGalaxy(gal,dc):
     gal.VHI = setVHI(gal.logMHI,gal.UDG_switch,gal.v_HI)
     #
     #Set the Polyex rotation curve parameters:
-        Polyex_V, Polyex_r, Polyex_a = setRC(gal.RHI,gal.VHI,gal.UDG_switch)
+    Polyex_V, Polyex_r, Polyex_a = setRC(gal.RHI,gal.VHI,gal.UDG_switch)
     gal.RC.vPE = copy.deepcopy(Polyex_V)
     gal.RC.rPE = copy.deepcopy(Polyex_r)
     gal.RC.aPE = copy.deepcopy(Polyex_a)
