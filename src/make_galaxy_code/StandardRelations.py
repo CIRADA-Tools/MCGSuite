@@ -13,6 +13,56 @@ def CalcV(RCObj,R):
     return V
 
 
+def SD_UDG_exp(R,A,b,RHI):
+    #Functional form in Eqn. 1 in arxiv: 2204.05981
+    #Both A and b are free parameters that are scaled based off MHI and RHI
+    n=4
+    m=4
+    SD=A*(1+(b*R/RHI)**m)**(-n/m)
+    return SD
+
+def scale_exp(R_integrate,RHI,VHI,log_MHI):
+    #This function finds the optimal A and b parameter values that satisfies the following relations
+    # i) Surface density at R=RHI is equal to 1 Mo/pc^2
+    # ii) Integral of surface density over all space is equal to MHI
+    
+    N=50  #number of steps used in algorithm finding optimal A and b values for SD functional form
+    A=4.1
+    b=np.linspace(1,2,N)
+    #Looping over potential b-values
+    for i in range(N):
+        #Checking that surface density at RHI is equal to 1 mo/pc^2
+        if SD_UDG_exp(RHI,A,b[i],RHI)>0.99 and SD_UDG_exp(RHI,A,b[i],RHI)<1.01:
+            #Copying b-value that satisfies above criteria
+            b1=b[i]
+            break
+        
+    thresh=0.05  #threshold that determines how much b value can vary from best-fit value
+    low_b1=b1-thresh*b1
+    high_b1=b1+thresh*b1
+    #Varying A-parameter to ensure integral of SD is equal to MHI
+    A_array=np.linspace(3.9,5.5,N)
+    new_b_array=np.linspace(low_b1,high_b1,N)
+    for j in range(N):
+        for k in range(N):
+            #integrating surface density to check MHI condition
+            integrand=np.trapz(SD_UDG_exp(R_integrate,A_array[j],new_b_array[k],RHI)*R_integrate*1000,R_integrate*1000)
+            ratio=abs(integrand*2*np.pi)/(10**log_MHI)
+            if ratio>0.95 and ratio<1.05:
+                return A_array[j],new_b_array[k]
+ 
+
+def MP22_SD(r):
+    #This is the functional form published in "No need for DM in AGC 114905"
+    #https://arxiv.org/abs/2112.00017
+    SD0=5.2
+    R1=1.1
+    R2=16.5
+    alpha=18
+    SD=SD0*(np.exp(-r/R1))*(1+r/R2)**alpha
+    print('Using the surface density functional form in MP22 publication')
+    return SD/1.33333
+    
 def CalcSB(SBObj,VHI,R):
 # Returns the value of the Gaussian+Exponential surface brightness profile
 # at a galactocentric radius R given the parameters in SBObj of the
@@ -27,7 +77,18 @@ def CalcSB(SBObj,VHI,R):
     SBval = SBObj.sbmax * ( Gauss + Exp )
     Zarray = np.zeros_like(SBval)
     SB = np.maximum(SBval,Zarray)
+    #If UDG switch is on, recalculate surface density based on functional form in Eqn. 1 in arxiv: 2204.05981
+    if UDG_switch==True:
+        R_integrate=np.linspace(0.01,RHI*10.5,len(R))
+        A,b=scale_exp(R_integrate,RHI,VHI,log_MHI)
+        if A==None:
+          print('Invalid Input: MHI is outside of UDG Module capabilities')
+        SB=SD_UDG_exp(R,A,b,RHI)
+    #If the user wants to use the functional form in "No need for DM in AGC 114905"
+    if UDG_switch=='114905':
+        SB=MP22_SD(R)
     return SB
+
 
 
 
