@@ -42,6 +42,12 @@ def GetSuiteInputs(Suite,ModName):
     Suite.veldisp_array=ModuleVarCheck_Exit(Suite.veldisp_array,'veldisps',ModName,ErrorMsg)
     #   Try to get the number of realizations for each combination of parameters
     Suite.num_realizations=ModuleVarCheck_Exit(Suite.num_realizations,'NumRealizations',ModName,ErrorMsg)
+        #  Try to set the UDG_switch
+    Suite.UDG_switch=ModuleVarCheck_Exit(Suite.UDG_switch,'UDG_switch',ModName,ErrorMsg)
+    
+    if Suite.UDG_switch:
+        Suite.VHI_array=ModuleVarCheck_Exit(Suite.VHI_array,'v_HIs',ModName,ErrorMsg)
+    
     #   Try to get the number of processors to use
     Suite.nProcessors=ModuleVarCheck_Exit(Suite.nProcessors,'n_Processors',ModName,ErrorMsg)
     return Suite
