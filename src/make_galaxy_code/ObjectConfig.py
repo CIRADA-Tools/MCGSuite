@@ -9,7 +9,11 @@ def SuiteConfig(Suite):
     #   Create an array of numbers to keep track of the different realizations of each object
     Suite.num_array=np.linspace(0,Suite.num_realizations-1,Suite.num_realizations)
     #   Create an array that consists of the full catalogue of galaxy parameter combinations
-    Suite.CatalogueArray=np.array(np.meshgrid(Suite.mass_array, Suite.beams_array,Suite.inclination_array,Suite.pa_array,Suite.veldisp_array,Suite.num_array)).T.reshape(-1,6)
+    if Suite.UDG_switch==False:
+        Suite.CatalogueArray=np.array(np.meshgrid(Suite.mass_array, Suite.beams_array,Suite.inclination_array,Suite.pa_array,Suite.veldisp_array,Suite.num_array)).T.reshape(-1,6)
+    elif Suite.UDG_switch:
+        Suite.CatalogueArray=np.array(np.meshgrid(Suite.mass_array, Suite.beams_array,Suite.inclination_array,Suite.pa_array,Suite.veldisp_array,Suite.num_array,Suite.VHI_array)).T.reshape(-1,7)
+    
     #   Get the total number of galaxies that will be made
     Suite.n_galaxies=np.shape(Suite.CatalogueArray)[0]
 
@@ -39,17 +43,17 @@ def ConfigObjects(Galaxy,DataCube,TiltedRing,Profiles,GalaxyIO):
     
     TiltedRing=TiltedRingConfig(TiltedRing,Galaxy.nBeams,DataCube.beam_fwhm)
     
-    GalaxyIO=BasicIOConfig(GalaxyIO,Galaxy.nBeams,Galaxy.logMHI,Galaxy.inclination,Galaxy.pa,Galaxy.veldisp,Galaxy.v_HI,Galaxy.version_number,Galaxy.ID,Galaxy.UDG_switch)
+    GalaxyIO=BasicIOConfig(GalaxyIO,Galaxy.nBeams,Galaxy.logMHI,Galaxy.inclination,Galaxy.pa,Galaxy.veldisp,Galaxy.v_HI,Galaxy.version_number,Galaxy.ID,Galaxy.UDG_switch,DataCube.noise)
     
     return DataCube,TiltedRing,Profiles,GalaxyIO
 
 
-def BasicIOConfig(GalaxyIO,beams, mass, inc, pa,veldisp,v_HI,Version=None,ID=None,UDG_switch=False):
+def BasicIOConfig(GalaxyIO,beams, mass, inc, pa,veldisp,v_HI,Version=None,ID=None,UDG_switch=False,noise=None):
     #   Name the Output galaxy
-    GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)
+    GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".noise_"+str(round(noise,3))
     #       If there's a version number, include that in the name
     if Version !=None:
-        GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".version_"+str(Version)
+        GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".noise_"+str(round(noise,3))+ ".version_"+str(Version)
     if UDG_switch:
         GalaxyIO.GalaxyName+=".UDG_True.v_HI_"+str(v_HI)
     #   Name the diagnostic moment maps plot

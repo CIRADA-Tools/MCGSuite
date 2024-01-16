@@ -11,6 +11,8 @@ veldisp=8.
 #Switch used to determine if UDG scaling relations are used or not (T/F)
 UDG_switch=False
 
+v_HI=0.
+
 # Output Folder
 OutFolder='MakeGalaxy_MGC_TestOutput'
 # Verbose plot switch

@@ -31,7 +31,7 @@ class BasicIO:
 
 class Suite:
     #   Set the full dictionary of Suite attributes
-    __slots__=['mass_array','beams_array','inclination_array','pa_array','veldisp_array','num_realizations','num_array','CatalogueArray','n_galaxies','Templates','SuiteIO','nProcessors','DBTable']
+    __slots__=['mass_array','beams_array','inclination_array','pa_array','veldisp_array','num_realizations','num_array','CatalogueArray','UDG_switch','VHI_array','n_galaxies','Templates','SuiteIO','nProcessors','DBTable']
     def __init__(self):
         self.mass_array=None
 
@@ -53,6 +53,11 @@ class Suite:
 
         #      Create a BasicIO instance for the suite
         self.SuiteIO=BasicIO()
+        #Set the default UDG_switch to False (only used to create mock cubes of UDGs)
+        self.UDG_switch=False
+        
+        self.VHI_array=None
+        
         #   Create a profiles, tilted ring, and data cube template for the suite that will be used for initialzing each instance of a galaxy.
         ProfilesTemplate=Profiles()
         TiltedRingTemplate=TiltedRing()

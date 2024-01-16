@@ -82,6 +82,12 @@ def CreateGalaxyInstance(step,Suite):
     Galaxy.veldisp=Suite.CatalogueArray[step,4]
     Galaxy.version_number=int(Suite.CatalogueArray[step,5])
     Galaxy.ID=int(step)
+    Galaxy.UDG_switch=Suite.UDG_switch
+    if Suite.UDG_switch:
+        Galaxy.v_HI=Suite.CatalogueArray[step,6]
+        #print(Suite.VHI_array)
+        #print("UDG COnfig Calc Checks", Galaxy.v_HI)
+        #print(Suite.CatalogueArray[step,:])
 
     return Galaxy
 
