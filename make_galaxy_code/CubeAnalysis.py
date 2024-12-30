@@ -17,6 +17,7 @@ def GetProfilesAndMaps(GalaxyIO,PositionAngle,BeamFWHM,noise,dist):
     
     #   Get the Cube
     CubeFile=GalaxyIO.GalaxyName+"/"+GalaxyIO.GalaxyName+".fits"
+    #CubeFile=GalaxyIO.GalaxyName+"/"+GalaxyIO.GalaxyName+"_ConvolvedSourceCube.fits"
     FullCube = fits.open(CubeFile)
     FullData=FullCube[0].data
     header=FullCube[0].header
@@ -32,14 +33,14 @@ def GetProfilesAndMaps(GalaxyIO,PositionAngle,BeamFWHM,noise,dist):
     
     Velocities=GetVels(header)
     PX,PY=GetPixels(header)
-    BS=1./2.*(BeamFWHM/((PX[1]-PX[0])*3600.))
+    BS=1./2.*(BeamFWHM/((PX[0]-PX[1])*3600.))
     
     FullResult=GeneralProfileAndMaps(Velocities,MaskedFullData)
     NoiselessResult=GeneralProfileAndMaps(Velocities,NoiselessData)
     PVMajorData,PVMinorData=PVCalculatorV2(MaskedFullData,Velocities,PositionAngle,BS)
     PVMajorSource,PVMinorSource=PVCalculatorV2(NoiselessData,Velocities,PositionAngle,BS)
     
-    
+
     PixSize=[PX[1]-PX[0],PY[1]-PY[0]]
     ChannelSize=Velocities[1]-Velocities[0]
     MTot=MassCalc(NoiselessData,PixSize,BeamFWHM,dist,ChannelSize)
@@ -63,7 +64,7 @@ def MassCalc(cube,PixSize,beam_size,dist,ChannelSize):
     beamarea=(np.pi*beam_size**2.)/(4.*np.log(2.))
     pixperbeam=beamarea/(abs(PixSize[0]*3600.)*abs(PixSize[0])*3600.)
     totalsignal = np.sum(cube)/pixperbeam
-    Mtest1 = 0.236*(dist*1000.)**2*totalsignal*ChannelSize
+    Mtest1 = 0.236*(dist*1000.)**2*totalsignal*np.abs(ChannelSize)
     #print(Mtest1,np.log10(Mtest1),totalsignal,pixperbeam,beamarea)
     return Mtest1
 
@@ -164,7 +165,7 @@ def RadioMomentMapCalc(Fluxes,Velocities):
 
 def PVCalculatorV2(Fluxes,Velocities,PositionAngle,SliceThickness):
     #   Adjust the position angle so that 0 points in the y direction
-    paRad_Major=(90-PositionAngle)*np.pi/180.
+    paRad_Major=(-90-PositionAngle)*np.pi/180.
     paRad_Minor=paRad_Major+np.pi/2.
     #   Set the dimensions of the PV digram
     PVDimensions=[np.shape(Fluxes)[0],np.shape(Fluxes)[1]]
@@ -175,6 +176,9 @@ def PVCalculatorV2(Fluxes,Velocities,PositionAngle,SliceThickness):
     PVMinor=np.zeros(PVDimensions)
     #   Set the thickness of the slice
     SliceThicknessInt=int(SliceThickness)+1
+    
+    print("PV Calc",CentPix,PositionAngle)
+    print("PV dimensions", PVDimensions,SliceThickness,SliceThicknessInt)
     
     for i in range(PVDimensions[1]):
         #   Get x for the major diagram and yy for the minor
@@ -190,6 +194,7 @@ def PVCalculatorV2(Fluxes,Velocities,PositionAngle,SliceThickness):
             #   Get the correct indices for the 'minor' axis point in the observed orientation.
             k=int(round(xP+CentPix[0]))
             l=int(round(yP+CentPix[1]))
+           
             #   Make sure the points are inside the observed image
             if k >= 0 and k < np.shape(Fluxes)[1]:
                 if l >= 0 and l < np.shape(Fluxes)[1]:
@@ -206,14 +211,16 @@ def PVCalculatorV2(Fluxes,Velocities,PositionAngle,SliceThickness):
                     for m in range(PVDimensions[0]):
                         PVMajor[m,i]+=Fluxes[m,k,l]
 
+    print("PVFlux check", np.nansum(PVMajor),np.nansum(PVMinor))
     return PVMajor,PVMinor
 
 
 def SpatialRotate(Fluxes,PositionAngle):
     
-    paRad_Major=(-90+PositionAngle)*np.pi/180.
+    paRad_Major=-(-90+PositionAngle)*np.pi/180.
     NewFlux=np.zeros(np.shape(Fluxes))
     CentPix=[int(np.shape(Fluxes)[1]/2),int(np.shape(Fluxes)[2]/2)]
+    
     
     for i in range(np.shape(Fluxes)[1]):
         for j in range(np.shape(Fluxes)[2]):

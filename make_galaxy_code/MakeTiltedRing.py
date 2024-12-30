@@ -32,7 +32,10 @@ def MakeTiltedRing(Galaxy,DataCube,TiltedRing):
     TiltedRing.position_angle=Galaxy.pa
     #   Use the input velocity dispersions for the galaxy
     TiltedRing.v_dispersion=Galaxy.veldisp
-    
+    #   Use the distance to get the systemic velocity using
+    TiltedRing.vsys=SR.HubbleFlowVel(Galaxy.distance)
+    #       Adjust the reference location to VSys, but in m/s
+    DataCube.reference_values[2]=TiltedRing.vsys
     return TiltedRing
 
 

@@ -210,7 +210,7 @@ class TiltedRing:
 
 
         #   Default RA center (degrees)
-        self.ra_center=0.
+        self.ra_center=180.
         #   Default declination center (degrees)
         self.dec_center=0.
         #   Default inclination (degrees)

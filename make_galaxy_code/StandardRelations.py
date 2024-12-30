@@ -153,3 +153,13 @@ def SBUnitConversion(SB):
 #-->OUTPUT: SB = a surface brightness in Jy km/s arcsec^-2
     SB=SB*1.24756e+20/(6.0574E5*1.823E18*(2.*np.pi/np.log(256.)))
     return SB
+
+
+    
+def HubbleFlowVel(Dist):
+#   Calculates a velocity using the Hubble Flow based on the distance.  This calculations uses a Hubble constant of 70 km/s/Mpc
+#-->INPUT: Dist = a distance in Mpc
+#-->OUTPUT: VSys = a velocity in km/s
+    H0=70.
+    VSys=H0*Dist
+    return VSys

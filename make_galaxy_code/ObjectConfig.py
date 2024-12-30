@@ -33,6 +33,8 @@ def SuiteConfig(Suite):
 
             
 def RandomSuiteConfig(Suite):
+    print("Configuring Random Suite")
+    print(Suite.UDG_switch)
 
     Suite.n_galaxies=Suite.SuiteDict['nTot']
     #   Create an array that consists of the full catalogue of galaxy parameter combinations
@@ -121,12 +123,12 @@ def ConfigObjects(Galaxy,DataCube,TiltedRing,Profiles,GalaxyIO):
 
 def BasicIOConfig(GalaxyIO,beams, mass, inc, pa,veldisp,v_HI,Version=None,ID=None,UDG_switch=False,noise=None):
     #   Name the Output galaxy
-    GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".noise_"+str(round(noise,3))
+    GalaxyIO.GalaxyName="ba_"+str(round(beams,2))+".mass_"+str(round(mass,2))+".inc_"+str(round(inc,1))+".pa_"+ str(round(pa,1))+".veldisp_"+str(round(veldisp,1))
     #       If there's a version number, include that in the name
     if Version !=None:
-        GalaxyIO.GalaxyName="ba_"+str(beams)+".mass_"+str(round(mass,5))+".inc_"+str(inc)+".pa_"+ str(pa)+".veldisp_"+str(veldisp)+".noise_"+str(round(noise,3))+ ".version_"+str(Version)
+        GalaxyIO.GalaxyName="ba_"+str(round(beams,2))+".mass_"+str(round(mass,2))+".inc_"+str(round(inc,1))+".pa_"+ str(round(pa,1))+".veldisp_"+str(round(veldisp,1))+".noise_"+str(round(noise,3))+ ".version_"+str(Version)
     if UDG_switch:
-        GalaxyIO.GalaxyName+=".UDG_True.v_HI_"+str(v_HI)
+        GalaxyIO.GalaxyName+=".UDG_True.v_HI_"+str(round(v_HI,2))
     #   Name the diagnostic moment maps plot
     GalaxyIO.MapPlotName=GalaxyIO.GalaxyName+"_MomentMaps.png"
         #   Name the diagnostic profiles plot

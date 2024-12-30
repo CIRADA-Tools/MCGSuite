@@ -79,7 +79,9 @@ def MakeProfilesPlots(Profiles,Galaxy,PlotName):
 def MakeMomentMapsPlot(GalaxyIO,PositionAngle,BeamFWHM,noise,RHI,Inc,distance,VHI,VSys,VDisp,PlotName):
     #GetProfilesAndMaps(GalaxyIO)
     PX,PY,Vels,VelocityProfile,Mom0,Mom1,Mom2,SourceProfile,SourceMom0,SourceMom1,SourceMom2,PVMajor,PVMinor,PVMajorSource,PVMinorSource=CA.GetProfilesAndMaps(GalaxyIO,PositionAngle,BeamFWHM,noise,distance)
-    
+    #print("PX and PY")
+    #print(PX)
+    #print(PY)
     
     PXX,PYY=np.meshgrid((PX-PX[int(len(PX)/2)])*3600.,(PY-PY[int(len(PY)/2)])*3600.)
     PXX2,VS=np.meshgrid((PY-PY[int(len(PY)/2)])*3600.,Vels)
@@ -164,10 +166,14 @@ def MomentMap_Ellipse(ax,Map,cMap,X,Y,Labels,Title,a,inc,pa,center,CLims):
     ax.pcolormesh(X,Y,Map,cmap=cMap,vmin=CLims[0],vmax=CLims[1],shading='auto')
     ellip=np.cos(inc*np.pi/180.)
     b=a*ellip
-    angle=(90+pa)
+    angle=-(pa-90)
+    #print("PA Check",pa,angle)
     Ell=Ellipse(center, a, b, angle,edgecolor='cyan',facecolor='none',lw=5)
     ax.add_patch(Ell)
     FormatPlot(ax,Labels,Title)
+    
+    XLim=[np.max(X),np.min(X)]
+    ax.set_xlim(XLim)
 
 
 
@@ -176,8 +182,8 @@ def VelocityProfilePlot(ax,Vels,Flux,Labels,Title):
     FormatPlot(ax,Labels,Title)
 
 def FormatPlot(ax,Labels,Title):
-    ax.xaxis.set_minor_locator(AutoMinorLocator(n=4))
-    ax.yaxis.set_minor_locator(AutoMinorLocator(n=4))
+    #ax.xaxis.set_minor_locator(AutoMinorLocator(n=4))
+    #ax.yaxis.set_minor_locator(AutoMinorLocator(n=4))
     ax.set_xlabel(Labels[0])
     ax.set_ylabel(Labels[1])
     ax.text(0.5, 1.05,Title,fontsize=35,horizontalalignment='center',transform=ax.transAxes)

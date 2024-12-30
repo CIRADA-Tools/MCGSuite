@@ -13,7 +13,7 @@ def Main():
     #   Create a combined array of all combinations of the suite parameters
     OC.RandomSuiteConfig(Suite)
 
-    """
+
     #   Set up parallel processing
     print("n Processors", Suite.nProcessors)
 
@@ -25,7 +25,7 @@ def Main():
 
     SO.CatalogueOutput(Suite)
     SO.CatalogueOutput_csv(Suite)
-    """
+
 
 if __name__=="__main__":
     freeze_support()

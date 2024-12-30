@@ -62,6 +62,10 @@ def Get_MakeSuite_Inputs_random():
     #   And get their inputs from suite_config_MCG.py
     Suite.SuiteIO=GetBasicIO(Suite.SuiteIO,SuiteIn)
    
+           #  Try to set the UDG_switch
+    ErrorMsg="UDG Switch Error"
+    Suite.UDG_switch=ModuleVarCheck_Exit(Suite.UDG_switch,'UDG_switch',SuiteIn,ErrorMsg)
+   
     #   ...and get the inputs from observatory_config_MCG.py
     Suite.Templates[1]=GetDataCubeInputs(Suite.Templates[1])
     
