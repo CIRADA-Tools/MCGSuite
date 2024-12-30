@@ -89,9 +89,9 @@ c           This routine writes out all the necessary header information
       character(10) date,time,zone
       character(20) tString
       integer date_I(8)
-      integer test1,test2
+      integer*8 test1,test2
 
-      integer naxesT(3),naxisT
+      integer*8 naxesT(3),naxisT
 
       simple=.true.
       naxis=3
@@ -277,8 +277,8 @@ c      print*, "Writing Fits Body"
       group=1
       fpixel=1
       nelements=naxes(1)*naxes(2)*naxes(3)
-c      print*, "check on shape/size", nelements, group,fpixel
-c     &          ,shape(FTest)
+      print*, "check on shape/size", nelements, group,fpixel
+     &          ,shape(FTest)
 c      call ftppre(unit,group,fpixel,nelements,DC%Flux,status)
       call ftppre(unit,group,fpixel,nelements,FTest,status)
 c      call ffppxe(unit,group,fpixel,nelements,FTest,status)
