@@ -12,3 +12,4 @@ Inputs/observatory_config_MCG_ori.py
 third_party/cfitsio-3.3x/config.log
 Inputs/galaxyconfig_MCG_ori.py
 /Inputs/__pycache__
+/make_galaxy_code/__pycache__
