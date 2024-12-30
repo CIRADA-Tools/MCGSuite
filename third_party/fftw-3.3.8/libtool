@@ -75,13 +75,13 @@ PATH_SEPARATOR=":"
 
 # The host system.
 host_alias=
-host=arm-apple-darwin22.5.0
-host_os=darwin22.5.0
+host=arm-apple-darwin23.2.0
+host_os=darwin23.2.0
 
 # The build system.
 build_alias=
-build=arm-apple-darwin22.5.0
-build_os=darwin22.5.0
+build=arm-apple-darwin23.2.0
+build_os=darwin23.2.0
 
 # A sed program that does not truncate output.
 SED="/usr/bin/sed"
@@ -359,8 +359,8 @@ old_archive_from_new_cmds=""
 old_archive_from_expsyms_cmds=""
 
 # Commands used to build a shared archive.
-archive_cmds="\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring \$single_module"
-archive_expsym_cmds="sed 's|^|_|' < \$export_symbols > \$output_objdir/\$libname-symbols.expsym~\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring \$single_module \$wl-exported_symbols_list,\$output_objdir/\$libname-symbols.expsym"
+archive_cmds="\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring "
+archive_expsym_cmds="sed 's|^|_|' < \$export_symbols > \$output_objdir/\$libname-symbols.expsym~\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring  \$wl-exported_symbols_list,\$output_objdir/\$libname-symbols.expsym"
 
 # Commands used to build a loadable module if different from building
 # a shared archive.
@@ -11707,8 +11707,8 @@ old_archive_from_new_cmds=""
 old_archive_from_expsyms_cmds=""
 
 # Commands used to build a shared archive.
-archive_cmds="\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring \$single_module"
-archive_expsym_cmds="sed 's|^|_|' < \$export_symbols > \$output_objdir/\$libname-symbols.expsym~\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring \$single_module \$wl-exported_symbols_list,\$output_objdir/\$libname-symbols.expsym"
+archive_cmds="\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring "
+archive_expsym_cmds="sed 's|^|_|' < \$export_symbols > \$output_objdir/\$libname-symbols.expsym~\$CC -dynamiclib \$allow_undefined_flag -o \$lib \$libobjs \$deplibs \$compiler_flags -install_name \$rpath/\$soname \$verstring  \$wl-exported_symbols_list,\$output_objdir/\$libname-symbols.expsym"
 
 # Commands used to build a loadable module if different from building
 # a shared archive.
