@@ -51,6 +51,29 @@ def GetSuiteInputs(Suite,ModName):
     #   Try to get the number of processors to use
     Suite.nProcessors=ModuleVarCheck_Exit(Suite.nProcessors,'n_Processors',ModName,ErrorMsg)
     return Suite
+    
+    
+def Get_MakeSuite_Inputs_random():
+    #   Import the suite config
+    SuiteIn=importlib.import_module('Inputs.suite_config_MCG_random')
+    #   Set up the Suite object
+    Suite=OD.Suite()
+
+    #   And get their inputs from suite_config_MCG.py
+    Suite.SuiteIO=GetBasicIO(Suite.SuiteIO,SuiteIn)
+   
+    #   ...and get the inputs from observatory_config_MCG.py
+    Suite.Templates[1]=GetDataCubeInputs(Suite.Templates[1])
+    
+    #   Finally Check on beta configuation options
+    BetaConfigInputs(Suite.SuiteIO,Suite.Templates[1],Suite.Templates[2],Suite.Templates[0])
+    
+    #   Get the full suite dictionary
+    Suite.SuiteDict=vars(SuiteIn)['SuiteDict']
+    
+    Suite.nProcessors=SuiteIn.n_Processors
+    
+    return Suite
 
 def GetMakeGalaxyInputs():
     #   Import the galaxy config file

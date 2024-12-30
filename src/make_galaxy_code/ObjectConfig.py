@@ -31,9 +31,80 @@ def SuiteConfig(Suite):
             exit()
 
 
+            
+def RandomSuiteConfig(Suite):
 
+    Suite.n_galaxies=Suite.SuiteDict['nTot']
+    #   Create an array that consists of the full catalogue of galaxy parameter combinations
+    DictList=['MassDict','BeamDict','IncDict','PADict','VelDispDict']
+    if Suite.UDG_switch:
+        DictList.append('VHIDict')
+        VHIs=[None]*Suite.n_galaxies
+    Suite.CatalogueArray=[None]*Suite.n_galaxies
+    Mass=[None]*Suite.n_galaxies
+    Beams=[None]*Suite.n_galaxies
+    Inc=[None]*Suite.n_galaxies
+    PA=[None]*Suite.n_galaxies
+    veldisp=[None]*Suite.n_galaxies
+    for i in range(Suite.n_galaxies):
+        for x in DictList:
+            if x=='MassDict':
+                Mass[i]=Set_Specific_Param(Suite.SuiteDict[x])
+            elif x=='BeamDict':
+                Beams[i]=Set_Specific_Param(Suite.SuiteDict[x])
+            elif x=='IncDict':
+                Inc[i]=Set_Specific_Param(Suite.SuiteDict[x])
+            elif x=='PADict':
+                PA[i]=Set_Specific_Param(Suite.SuiteDict[x])
+            elif x=='VelDispDict':
+                veldisp[i]=Set_Specific_Param(Suite.SuiteDict[x])
+            elif x=='VHIDict':
+                VHIs[i]=Set_Specific_Param(Suite.SuiteDict[x])
+        if Suite.UDG_switch:
+            Suite.CatalogueArray[i]=[Mass[i],Beams[i],Inc[i],PA[i],veldisp[i],VHIs[i]]
+        else:
+            Suite.CatalogueArray[i]=[Mass[i],Beams[i],Inc[i],PA[i],veldisp[i]]
+    if Suite.UDG_switch==False:
+        Suite.CatArrDict={'Mass':Mass,'Beam':Beams,'Inc':Inc,'PA':PA}
+    else:
+        Suite.CatArrDict={'Mass':Mass,'Beam':Beams,'Inc':Inc,'PA':PA,'VHI':VHIs}
 
+ 
+    print("Catalogue Array shape", np.shape(Suite.CatalogueArray))
+    Suite.DBTable=[None]*Suite.n_galaxies
 
+    MaxCubeMemoryEstimate=200*200*200*4/1.e9        #The maximum cube size estimate assuming 200x200x200 cube
+    SuiteMaxMemoryEstimate=MaxCubeMemoryEstimate*3*Suite.n_galaxies
+    print("The estimated maximum memory usage (assuming 200x200x200 cube): ",\
+          SuiteMaxMemoryEstimate, " Gb")
+
+    if SuiteMaxMemoryEstimate > 10:
+        Check=input("Warning: This suite may store more than 10 Gb of memory. Enter 'Y' to proceed ")
+        if Check != 'Y' and Check !='y':
+            print ("Exiting the program")
+            exit()
+
+def Set_Specific_Param(ParamDict):
+    if ParamDict['Flag']:
+        Val=GetRanVal(ParamDict['Range'],ParamDict['RanType'])
+    else:
+        Val=ParamDict['FixedVal']
+    return Val
+
+def GetRanVal(Limits,RanType):
+    if RanType==0:
+        Del=Limits[1]-Limits[0]
+        Val=np.random.rand()*Del + Limits[0]
+    elif RanType==1:
+        LogLow=np.log10(Limits[0])
+        LogHigh=np.log10(Limits[1])
+        Del=LogHigh-LogLow
+        Val=np.random.rand()*Del + LogLow
+        Val=10.**Val
+    else:
+        print("No valid random selection type picked")
+        exit()
+    return Val
 
 def ConfigObjects(Galaxy,DataCube,TiltedRing,Profiles,GalaxyIO):
 

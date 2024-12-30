@@ -31,7 +31,7 @@ class BasicIO:
 
 class Suite:
     #   Set the full dictionary of Suite attributes
-    __slots__=['mass_array','beams_array','inclination_array','pa_array','veldisp_array','num_realizations','num_array','CatalogueArray','UDG_switch','VHI_array','n_galaxies','Templates','SuiteIO','nProcessors','DBTable']
+    __slots__=['mass_array','beams_array','inclination_array','pa_array','veldisp_array','num_realizations','num_array','CatalogueArray','UDG_switch','VHI_array','n_galaxies','Templates','SuiteIO','nProcessors','DBTable','SuiteDict','CatArrDict']
     def __init__(self):
         self.mass_array=None
 
@@ -67,6 +67,10 @@ class Suite:
         self.nProcessors=1
 
         self.DBTable=None
+        #   Set some initial dictionaries if running in random mode
+        self.SuiteDict={}
+        
+        self.CatArrDict={}
 
 
 class Galaxy:
