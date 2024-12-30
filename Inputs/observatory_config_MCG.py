@@ -7,4 +7,4 @@ ChannelSize=4.
 # beam FWHM (arcsec)
 beam_fwhm=30
 #### Underlying Noise amount (mJy/beam)
-noise_value=6.4
+noise_value=1.6
