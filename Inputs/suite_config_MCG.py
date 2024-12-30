@@ -1,5 +1,5 @@
 #   Target HI Masses
-Masses=[7.5]
+Masses=[7.5,8.5]
 #   Target Beams Across
 Beams=[5.5]
 #   Inclination selections (degrees)
@@ -9,7 +9,7 @@ PositionAngles=[0.]
 #   Velocity Dispersion Selections (km/s)
 veldisps=[8.]
 #Switch used to determine if UDG scaling relations are used or not (T/F)
-UDG_switch=False
+UDG_switch=True
 
 v_HIs=[23.0,29.0]
 
