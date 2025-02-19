@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from src.make_galaxy_code import *
+from make_galaxy_code import *
 
 #from joblib import Parallel, delayed
 import multiprocessing as mp

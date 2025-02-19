@@ -3,3 +3,13 @@
 .Plo
 .a
 .pyc
+Inputs/__pycache__/galaxyconfig_MCG.cpython-39.pyc
+Inputs/__pycache__/observatory_config_MCG.cpython-39.pyc
+Inputs/__pycache__/suite_config_MCG.cpython-39.pyc
+Inputs/observatory_config_MCG_ori.py
+/src/__pycache__
+/src/make_galaxy_code/__pycache__
+third_party/cfitsio-3.3x/config.log
+Inputs/galaxyconfig_MCG_ori.py
+/Inputs/__pycache__
+/make_galaxy_code/__pycache__

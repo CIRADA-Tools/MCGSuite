@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from src.make_galaxy_code import *
+from make_galaxy_code import *
 
 #   Get the inputs and set up the objects
 Galaxy,DataCube,TiltedRing,Profiles,GalaxyIO=IN.GetMakeGalaxyInputs()    #From config files
