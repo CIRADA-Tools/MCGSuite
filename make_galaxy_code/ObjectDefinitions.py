@@ -4,7 +4,13 @@ import numpy as np
 
 class BasicIO:
     #   Set the full dictionary of BasicIO attributes
-    __slots__ = ['Beta_InputsFile', 'OutputFolder','GalaxyName','ProfileFile','OutputCubeNames','MCG_Main_InputFile','MCG_DataCube_InputFile','MCG_TiltedRing_InputFile','plot_verbose','file_verbose','output_volume_switch','MapPlotName','ProfilePlotName']
+    __slots__ = [
+        'Beta_InputsFile', 'OutputFolder','GalaxyName','ProfileFile','OutputCubeNames',
+        'MCG_Main_InputFile','MCG_DataCube_InputFile','MCG_TiltedRing_InputFile',
+        'plot_verbose','file_verbose','output_volume_switch','MapPlotName','ProfilePlotName',
+        # Backend selection and performance knobs for the upcoming Python implementation
+        'backend','device','dtype','chunk_size','threads','seed'
+    ]
     #   Basic IO initializing function
     def __init__(self):
         #   By Default no Beta file is specified
@@ -27,6 +33,19 @@ class BasicIO:
 
         #   Set the default output MCG file volume switch.  This will be determined by the plot and file verbose flags
         self.output_volume_switch=2
+
+        #   Backend selection for cube generation ('fortran' | 'python')
+        self.backend='fortran'
+        #   Device preference for the Python backend ('cpu' | 'cuda')
+        self.device='cpu'
+        #   Numerical precision for Python backend ('float32' | 'float64')
+        self.dtype='float32'
+        #   Optional chunk size along spectral axis for Python backend (None -> auto)
+        self.chunk_size=None
+        #   Optional thread count for CPU FFTs (Python backend)
+        self.threads=None
+        #   Random seed forwarding (Python backend)
+        self.seed=None
 
 
 class Suite:
