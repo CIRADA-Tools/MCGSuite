@@ -16,6 +16,7 @@ def SuiteConfig(Suite):
     
     #   Get the total number of galaxies that will be made
     Suite.n_galaxies=np.shape(Suite.CatalogueArray)[0]
+    Suite.SuiteDict['nTot']=Suite.n_galaxies
 
     Suite.DBTable=[None]*Suite.n_galaxies
 
