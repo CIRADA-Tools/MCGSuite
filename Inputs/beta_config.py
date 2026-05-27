@@ -2,7 +2,7 @@
 # Cloud mode
 cmode = 0
 # Base number density of particle clouds
-CloudSurfDens = 1000
+CloudSurfDens = 100
 # random seed for the particle generation
 ranseed=-5
 
